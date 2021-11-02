@@ -6,12 +6,12 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN = os.environ.get("BitlyToken")
 REQUEST_URL = "https://api-ssl.bitly.com/v4/bitlinks"
-LONG_URL = input("Enter your link: ")
+INPUT_URL = input("Enter your link: ")
 
 
-def shorten_link(TOKEN, LONG_URL):
+def shorten_link(TOKEN, INPUT_URL):
     body = {
-        "long_url": LONG_URL
+        "long_url": INPUT_URL
     }
     headers = {
         "Authorization": f"Bearer {TOKEN}"
@@ -25,8 +25,29 @@ def shorten_link(TOKEN, LONG_URL):
     return bitlink
 
 
+def count_clicks(TOKEN, INPUT_URL):
+    count_url = f"{REQUEST_URL}/{INPUT_URL}/clicks/summary"
+    headers = {
+        "Authorization": f"Bearer {TOKEN}"
+    }
+    params = {
+        "unit": "day",
+        "units": -1
+    }
+    response = requests.get(count_url, headers=headers, params=params)
+    response.raise_for_status()
+
+    clicks_count = json.loads(response.text)["total_clicks"]
+
+    return clicks_count
+
+
 try:
-    bitlink = shorten_link(TOKEN, LONG_URL)
-    print('Битлинк', bitlink)
+    clicks_count = count_clicks(TOKEN, INPUT_URL)
+    print("Clicks", clicks_count)
+    #bitlink = shorten_link(TOKEN, INPUT_URL)
+    #print('Your bitlink', bitlink)
 except requests.exceptions.HTTPError:
     print("ERROR")
+
+#print(count_clicks(TOKEN, INPUT_URL))
