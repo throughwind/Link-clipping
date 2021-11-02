@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.environ.get("BitlyToken")
-LONG_URL = os.environ.get("LongURL")
 REQUEST_URL = "https://api-ssl.bitly.com/v4/bitlinks"
 
 
@@ -25,4 +24,6 @@ def shorten_link(TOKEN, LONG_URL):
     return date_response["link"]
 
 
-print('Битлинк', shorten_link(TOKEN, LONG_URL))
+if __name__ == "__main__":
+    LONG_URL = input("Enter your link: ")
+    print('Битлинк', shorten_link(TOKEN, LONG_URL))
