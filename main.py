@@ -52,7 +52,7 @@ def main():
         is_bitlink(INPUT_URL)
         print(is_bitlink(INPUT_URL))
     except requests.exceptions.HTTPError:
-        print("ERROR")
+        print("Input error")
 
 
 if __name__ == '__main__':
