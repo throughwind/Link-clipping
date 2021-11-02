@@ -3,22 +3,26 @@ import os
 import json
 from dotenv import load_dotenv
 
-
 load_dotenv()
 TOKEN = os.environ.get("BitlyToken")
 LONG_URL = os.environ.get("LongURL")
+REQUEST_URL = "https://api-ssl.bitly.com/v4/bitlinks"
 
-body = {
-    "long_url": LONG_URL
-}
-headers = {
-    "Authorization": f"Bearer {TOKEN}"
-}
 
-url = "https://api-ssl.bitly.com/v4/bitlinks"
-response = requests.post(url, headers=headers, json=body)
-response.raise_for_status()
+def shorten_link(TOKEN, LONG_URL):
+    body = {
+        "long_url": LONG_URL
+    }
+    headers = {
+        "Authorization": f"Bearer {TOKEN}"
+    }
 
-date_response = json.loads(response.text)
+    response = requests.post(REQUEST_URL, headers=headers, json=body)
+    response.raise_for_status()
 
-print(date_response["link"])
+    date_response = json.loads(response.text)
+
+    return date_response["link"]
+
+
+print('Битлинк', shorten_link(TOKEN, LONG_URL))
