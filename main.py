@@ -12,7 +12,7 @@ HEADERS = {
 }
 
 
-def shorten_link(TOKEN, INPUT_URL):
+def shorten_link(INPUT_URL):
     body = {
         "long_url": INPUT_URL
     }
@@ -24,7 +24,7 @@ def shorten_link(TOKEN, INPUT_URL):
     return bitlink
 
 
-def count_clicks(TOKEN, INPUT_URL):
+def count_clicks(INPUT_URL):
     count_url = f"{REQUEST_URL}/{INPUT_URL}/clicks/summary"
     params = {
         "unit": "day",
@@ -40,16 +40,21 @@ def count_clicks(TOKEN, INPUT_URL):
 
 def is_bitlink(INPUT_URL):
     if "bit.ly" in INPUT_URL:
-        try:
-            clicks_count = count_clicks(TOKEN, INPUT_URL)
-            print("Clicks", clicks_count)
-        except requests.exceptions.HTTPError:
-            print("ERROR")
+        clicks_count = count_clicks(INPUT_URL)
+        return f"Clicks: {clicks_count}"
     else:
-        try:
-            bitlink = shorten_link(TOKEN, INPUT_URL)
-            print('Your bitlink:', bitlink)
-        except requests.exceptions.HTTPError:
-            print("ERROR")
+        bitlink = shorten_link(INPUT_URL)
+        return f"Your bitlink: {bitlink}"
 
-is_bitlink(INPUT_URL)
+
+def main():
+    try:
+        is_bitlink(INPUT_URL)
+        print(is_bitlink(INPUT_URL))
+    except requests.exceptions.HTTPError:
+        print("ERROR")
+
+
+if __name__ == '__main__':
+    main()
+
