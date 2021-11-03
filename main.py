@@ -22,13 +22,14 @@ def shorten_link(INPUT_URL):
     response = requests.post(REQUEST_URL, headers=HEADERS, json=body)
     response.raise_for_status()
 
-    bitlink = json.loads(response.text)["id"]
+    bitlink = json.loads(response.text)["link"]
 
     return bitlink
 
 
 def count_clicks(INPUT_URL):
-    count_url = f"{REQUEST_URL}/{INPUT_URL}/clicks/summary"
+    bitlink_pars = urlparse(INPUT_URL)
+    count_url = f"{REQUEST_URL}/{bitlink_pars.netloc}{bitlink_pars.path}/clicks/summary"
     params = {
         "unit": "day",
         "units": -1
