@@ -53,7 +53,6 @@ def main():
     load_dotenv()
     INPUT_URL = input("Enter your link: ")
     try:
-        #is_bitlink(INPUT_URL)
         print(is_bitlink(INPUT_URL))
     except requests.exceptions.HTTPError:
         print("Input error")
