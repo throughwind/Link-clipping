@@ -18,8 +18,8 @@ pip install -r requirements.txt
 
 Запуская скрипт мы получаем приглашение ввести адрес ссылки
 ```bash
-(env) oregon@oregon-on-MacBook-Air api_lesson2 % python main.py
-Enter your link: 
+    (env) oregon@oregon-on-MacBook-Air api_lesson2 % python main.py
+    Enter your link: 
 ```
 
 ## Цель проекта
