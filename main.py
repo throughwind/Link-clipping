@@ -5,12 +5,7 @@ from dotenv import load_dotenv
 from urllib.parse import urlparse
 
 
-
-TOKEN = os.environ.get("BitlyToken")
 REQUEST_URL = "https://api-ssl.bitly.com/v4/bitlinks"
-HEADERS = {
-    "Authorization": f"Bearer {TOKEN}"
-}
 
 
 def shorten_link(INPUT_URL):
@@ -48,7 +43,6 @@ def is_bitlink(INPUT_URL):
 
 
 def main():
-    load_dotenv()
     INPUT_URL = input("Enter your link: ")
     try:
         print(is_bitlink(INPUT_URL))
@@ -57,4 +51,10 @@ def main():
 
 
 if __name__ == '__main__':
+    load_dotenv()
+    TOKEN = os.getenv("BitlyToken")
+    HEADERS = {
+        "Authorization": f"Bearer {TOKEN}"
+    }
+    print(TOKEN)
     main()
