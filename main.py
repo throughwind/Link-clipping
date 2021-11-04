@@ -6,10 +6,8 @@ from urllib.parse import urlparse
 
 
 
-load_dotenv()
 TOKEN = os.environ.get("BitlyToken")
 REQUEST_URL = "https://api-ssl.bitly.com/v4/bitlinks"
-INPUT_URL = input("Enter your link: ")
 HEADERS = {
     "Authorization": f"Bearer {TOKEN}"
 }
@@ -52,8 +50,10 @@ def is_bitlink(INPUT_URL):
 
 
 def main():
+    load_dotenv()
+    INPUT_URL = input("Enter your link: ")
     try:
-        is_bitlink(INPUT_URL)
+        #is_bitlink(INPUT_URL)
         print(is_bitlink(INPUT_URL))
     except requests.exceptions.HTTPError:
         print("Input error")
@@ -61,4 +61,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
