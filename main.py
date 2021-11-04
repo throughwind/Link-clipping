@@ -42,11 +42,9 @@ def count_clicks(INPUT_URL):
 
 def is_bitlink(INPUT_URL):
     if "bit.ly" in INPUT_URL:
-        clicks_count = count_clicks(INPUT_URL)
-        return f"Clicks: {clicks_count}"
+        return f"Clicks: {count_clicks(INPUT_URL)}"
     else:
-        bitlink = shorten_link(INPUT_URL)
-        return f"Your bitlink: {bitlink}"
+        return f"Your bitlink: {shorten_link(INPUT_URL)}"
 
 
 def main():
