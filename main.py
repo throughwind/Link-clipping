@@ -39,8 +39,8 @@ def count_clicks(INPUT_URL):
 
 
 def is_bitlink(INPUT_URL):
-    url_pars = urlparse(INPUT_URL)
-    some_url = f"{REQUEST_URL}/{url_pars.netloc}{url_pars.path}"
+    parsed_url = urlparse(INPUT_URL)
+    some_url = f"{REQUEST_URL}/{parsed_url.netloc}{parsed_url.path}"
     response = requests.get(some_url, headers=HEADERS)
 
     return response.ok
