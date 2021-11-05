@@ -4,7 +4,6 @@ import json
 from dotenv import load_dotenv
 from urllib.parse import urlparse
 
-
 REQUEST_URL = "https://api-ssl.bitly.com/v4/bitlinks"
 
 
@@ -14,7 +13,6 @@ def shorten_link(INPUT_URL):
     }
     response = requests.post(REQUEST_URL, headers=HEADERS, json=body)
     response.raise_for_status()
-
     bitlink = json.loads(response.text)["link"]
 
     return bitlink
@@ -29,32 +27,30 @@ def count_clicks(INPUT_URL):
     }
     response = requests.get(count_url, headers=HEADERS, params=params)
     response.raise_for_status()
-
     clicks_count = json.loads(response.text)["total_clicks"]
 
     return clicks_count
 
 
 def is_bitlink(INPUT_URL):
-    if "bit.ly" in INPUT_URL:
-        return f"Clicks: {count_clicks(INPUT_URL)}"
-    else:
-        return f"Your bitlink: {shorten_link(INPUT_URL)}"
+    url_pars = urlparse(INPUT_URL)
+    some_url = f"{REQUEST_URL}/{url_pars.netloc}{url_pars.path}"
+    response = requests.get(some_url, headers=HEADERS)
 
-
-def main():
-    INPUT_URL = input("Enter your link: ")
-    try:
-        print(is_bitlink(INPUT_URL))
-    except requests.exceptions.HTTPError:
-        print("Input error")
+    return response.ok
 
 
 if __name__ == '__main__':
+    INPUT_URL = input("Enter your link: ")
     load_dotenv()
     TOKEN = os.getenv("BitlyToken")
     HEADERS = {
         "Authorization": f"Bearer {TOKEN}"
     }
-    print(TOKEN)
-    main()
+    try:
+        if is_bitlink(INPUT_URL):
+            print(f"Counts: {count_clicks(INPUT_URL)}")
+        else:
+            print(f"Your billink: {shorten_link(INPUT_URL)}")
+    except requests.exceptions.HTTPError:
+        print("Input error")
