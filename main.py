@@ -1,9 +1,15 @@
 import requests
 import os
-import json
+from os.path import join, dirname
 from dotenv import load_dotenv
 from urllib.parse import urlparse
 
+
+INPUT_URL = input("Enter your link: ")
+TOKEN = os.getenv("BITLY_TOKEN")
+HEADERS = {
+    "Authorization": f"Bearer {TOKEN}"
+}
 REQUEST_URL = "https://api-ssl.bitly.com/v4/bitlinks"
 
 
@@ -13,7 +19,7 @@ def shorten_link(INPUT_URL):
     }
     response = requests.post(REQUEST_URL, headers=HEADERS, json=body)
     response.raise_for_status()
-    bitlink = json.loads(response.text)["link"]
+    bitlink = response.json()["link"]
 
     return bitlink
 
@@ -27,7 +33,7 @@ def count_clicks(INPUT_URL):
     }
     response = requests.get(count_url, headers=HEADERS, params=params)
     response.raise_for_status()
-    clicks_count = json.loads(response.text)["total_clicks"]
+    clicks_count = response.json()["total_clicks"]
 
     return clicks_count
 
@@ -41,12 +47,8 @@ def is_bitlink(INPUT_URL):
 
 
 if __name__ == '__main__':
-    INPUT_URL = input("Enter your link: ")
-    load_dotenv()
-    TOKEN = os.getenv("BitlyToken")
-    HEADERS = {
-        "Authorization": f"Bearer {TOKEN}"
-    }
+    dotenv_path = join(dirname(__file__), '.env')
+    load_dotenv(dotenv_path)
     try:
         if is_bitlink(INPUT_URL):
             print(f"Counts: {count_clicks(INPUT_URL)}")
