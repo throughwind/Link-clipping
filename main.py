@@ -1,5 +1,6 @@
 import requests
 import os
+import argparse
 from dotenv import load_dotenv
 from urllib.parse import urlparse
 
@@ -42,7 +43,10 @@ def is_bitlink(input_url, headers):
 
 if __name__ == '__main__':
     load_dotenv()
-    input_url = input("Enter your link: ")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input_url", nargs='?')
+    args = parser.parse_args()
+    input_url = args.input_url
     token = os.getenv("BITLY_TOKEN")
     headers = {
         "Authorization": f"Bearer {token}"

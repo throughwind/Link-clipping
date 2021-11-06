@@ -31,20 +31,17 @@ pip install -r requirements.txt
 
 ## Примеры использования
 
-Запуская скрипт мы получаем приглашение ввести адрес ссылки
+Запуская скрипт из терминала
 ```bash
 (venv) ➜  api_lesson2 git:(main) python main.py
-Enter your link: 
 ```
-Введем в наше поле адрес https://www.google.com/
+Далее через пробел введем ссылку https://www.google.com/
 ```
-(venv) ➜  api_lesson2 git:(main) python main.py
-Enter your link: https://www.google.com/
+(venv) ➜  api_lesson2 git:(main) python main.py https://www.google.com/
 ```
 После нажатия ENTER мы получим
 ```
-(venv) ➜  api_lesson2 git:(main) python main.py
-Enter your link: https://www.google.com/
+(venv) ➜  api_lesson2 git:(main) python main.py https://www.google.com/
 Your billink: https://bit.ly/3o3rfei
 ```
 Мы получили наш битлинк https://bit.ly/3o3rfei
@@ -54,13 +51,11 @@ Your billink: https://bit.ly/3o3rfei
 
 Запустим наш скрипт и введем в него получившуюся ссылку (битлинк)
 ```
-(venv) ➜  api_lesson2 git:(main) ✗ python main.py
-Enter your link: https://bit.ly/3o3rfei
+(venv) ➜  api_lesson2 git:(main) ✗ python main.py https://bit.ly/3o3rfei
 ```
 После нажатия ENTER мы получим
 ````
-(venv) ➜  api_lesson2 git:(main) ✗ python main.py
-Enter your link: https://bit.ly/3o3rfei
+(venv) ➜  api_lesson2 git:(main) ✗ python main.py https://bit.ly/3o3rfei
 Counts: 2
 ````
 Мы видим, что за сегодня по этому битлинку было совершено два перехода
